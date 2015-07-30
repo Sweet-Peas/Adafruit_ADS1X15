@@ -115,6 +115,19 @@ void Adafruit_ADS1015::begin() {
   Wire.begin();
 }
 
+#if defined(ARDUINO_ARCH_ESP8266)
+/**************************************************************************/
+/*!
+    @brief  Sets up the HW (reads coefficients values, etc.)
+            This function should be called if you are using an ESP8266 and
+            have the SDA and SCL pins other than 4 and 5.
+*/
+/**************************************************************************/
+void Adafruit_ADS1015::begin(uint8_t sda, uint8_t scl) {
+  Wire.begin(sda, scl);
+}
+#endif
+
 /**************************************************************************/
 /*!
     @brief  Sets the gain and input voltage range

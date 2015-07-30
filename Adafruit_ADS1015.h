@@ -129,6 +129,9 @@ protected:
  public:
   Adafruit_ADS1015(uint8_t i2cAddress = ADS1015_ADDRESS);
   void begin(void);
+#if defined(ARDUINO_ARCH_ESP8266)
+  void begin(uint8_t sda, uint8_t scl);
+#endif
   uint16_t  readADC_SingleEnded(uint8_t channel);
   int16_t   readADC_Differential_0_1(void);
   int16_t   readADC_Differential_2_3(void);
