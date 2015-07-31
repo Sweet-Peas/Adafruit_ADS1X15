@@ -180,10 +180,14 @@ uint16_t Adafruit_ADS1015::readADC_SingleEnded(uint8_t channel) {
       config |= ADS1015_REG_CONFIG_MUX_SINGLE_1;
       break;
     case (2):
-      config |= ADS1015_REG_CONFIG_MUX_SINGLE_2;
+      // Remapped for the Adc4One board
+//    config |= ADS1015_REG_CONFIG_MUX_SINGLE_2;
+      config |= ADS1015_REG_CONFIG_MUX_SINGLE_3;
       break;
     case (3):
-      config |= ADS1015_REG_CONFIG_MUX_SINGLE_3;
+      // Remapped for the Adc4One board
+//    config |= ADS1015_REG_CONFIG_MUX_SINGLE_3;
+      config |= ADS1015_REG_CONFIG_MUX_SINGLE_2;
       break;
   }
 

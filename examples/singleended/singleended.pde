@@ -1,12 +1,15 @@
 #include <Wire.h>
 #include <Adafruit_ADS1015.h>
 
+#define SCL_PIN      14
+#define SDA_PIN      2
+
 // Adafruit_ADS1115 ads;  /* Use this for the 16-bit version */
 Adafruit_ADS1015 ads;     /* Use thi for the 12-bit version */
 
 void setup(void) 
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("Hello!");
   
   Serial.println("Getting single-ended readings from AIN0..3");
@@ -25,7 +28,7 @@ void setup(void)
   // ads.setGain(GAIN_EIGHT);      // 8x gain   +/- 0.512V  1 bit = 0.25mV   0.015625mV
   // ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit = 0.125mV  0.0078125mV
   
-  ads.begin();
+  ads.begin(SDA_PIN, SCL_PIN);
 }
 
 void loop(void) 
