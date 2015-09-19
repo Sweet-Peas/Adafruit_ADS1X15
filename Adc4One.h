@@ -27,9 +27,17 @@
 #include <Wire.h>
 
 /*=========================================================================
+    DEVICE DEFINITIONS
+    -----------------------------------------------------------------------*/
+    #define ADS1015                        (0x01)   // 12 bit adc (default)
+    #define ADS1115                        (0x02)   // 16 bit adc
+/*=========================================================================*/
+
+/*=========================================================================
     I2C ADDRESS/BITS
     -----------------------------------------------------------------------*/
     #define ADS1015_ADDRESS                 (0x48)    // 1001 000 (ADDR = GND)
+    #define ADS1015_ADDRESS_1               (0x49)    // 1001 001 (ADDR = VCC)
 /*=========================================================================*/
 
 /*=========================================================================
@@ -87,6 +95,14 @@
     #define ADS1015_REG_CONFIG_DR_1600SPS   (0x0080)  // 1600 samples per second (default)
     #define ADS1015_REG_CONFIG_DR_2400SPS   (0x00A0)  // 2400 samples per second
     #define ADS1015_REG_CONFIG_DR_3300SPS   (0x00C0)  // 3300 samples per second
+    #define ADS1115_REG_CONFIG_DR_8SPS      (0x0000)  // 8 samples per second
+    #define ADS1115_REG_CONFIG_DR_16SPS     (0x0020)  // 16 samples per second
+    #define ADS1115_REG_CONFIG_DR_32SPS     (0x0040)  // 32 samples per second
+    #define ADS1115_REG_CONFIG_DR_64SPS     (0x0060)  // 64 samples per second
+    #define ADS1115_REG_CONFIG_DR_128SPS    (0x0080)  // 128 samples per second (default)
+    #define ADS1115_REG_CONFIG_DR_250SPS    (0x00A0)  // 250 samples per second
+    #define ADS1115_REG_CONFIG_DR_475SPS    (0x00B0)  // 475 samples per second
+    #define ADS1115_REG_CONFIG_DR_860SPS    (0x00C0)  // 860 samples per second
 
     #define ADS1015_REG_CONFIG_CMODE_MASK   (0x0010)
     #define ADS1015_REG_CONFIG_CMODE_TRAD   (0x0000)  // Traditional comparator with hysteresis (default)
@@ -128,6 +144,7 @@ protected:
 
  public:
   Adc4One(uint8_t i2cAddress = ADS1015_ADDRESS);
+  void init(uint8_t device = ADS1015);
   void begin(void);
 #if defined(ARDUINO_ARCH_ESP8266)
   void begin(uint8_t sda, uint8_t scl);
@@ -141,5 +158,6 @@ protected:
   adsGain_t getGain(void);
 
  private:
+  void      __init(uint8_t device);
 };
 

@@ -82,20 +82,45 @@ static uint16_t readRegister(uint8_t i2cAddress, uint8_t reg) {
 
 /**************************************************************************/
 /*!
-    @brief  Instantiates a new ADS1015 class w/appropriate properties
+    @brief  Initialize ads operation mode
 */
 /**************************************************************************/
-Adc4One::Adc4One(uint8_t i2cAddress) 
+void Adc4One::__init(uint8_t device)
 {
-   m_i2cAddress = i2cAddress;
-   m_conversionDelay = ADS1015_CONVERSIONDELAY;
-   m_bitShift = 4;
+   if (device == ADS1015) {
+      m_conversionDelay = ADS1015_CONVERSIONDELAY;
+      m_bitShift = 4;
+   } else {
+      m_conversionDelay = ADS1115_CONVERSIONDELAY;
+      m_bitShift = 0;
+   }
    m_gain = GAIN_TWOTHIRDS; /* +/- 6.144V range (limited to VDD +0.3V max!) */
 }
 
 /**************************************************************************/
 /*!
-    @brief  Sets up the HW (reads coefficients values, etc.)
+    @brief  Instantiates a new ADS1015 class w/appropriate I2C properties
+*/
+/**************************************************************************/
+Adc4One::Adc4One(uint8_t i2cAddress) 
+{
+   m_i2cAddress = i2cAddress;
+   __init(ADS1015);
+}
+
+/**************************************************************************/
+/*!
+    @brief  Initialize ADC type and related variables 
+*/
+/**************************************************************************/
+void Adc4One::init(uint8_t device)
+{
+   __init(device);
+}
+
+/**************************************************************************/
+/*!
+    @brief  Sets up the I2C interface
 */
 /**************************************************************************/
 void Adc4One::begin() {
@@ -105,7 +130,7 @@ void Adc4One::begin() {
 #if defined(ARDUINO_ARCH_ESP8266)
 /**************************************************************************/
 /*!
-    @brief  Sets up the HW (reads coefficients values, etc.)
+    @brief  Sets up the I2C interface
             This function should be called if you are using an ESP8266 and
             have the SDA and SCL pins other than 4 and 5.
 */
