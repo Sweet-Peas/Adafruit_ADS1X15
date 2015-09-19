@@ -1,11 +1,10 @@
 #include <Wire.h>
-#include <Adafruit_ADS1015.h>
+#include <Adc4One.h>
 
 #define SCL_PIN      14
 #define SDA_PIN      2
 
-// Adafruit_ADS1115 ads;  /* Use this for the 16-bit version */
-Adafruit_ADS1015 ads;     /* Use thi for the 12-bit version */
+Adc4One ads;     /* Use this for both the 12 and 16-bit version */
 
 void setup(void) 
 {

@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*!
-    @file     Adafruit_ADS1015.cpp
+    @file     Adc4One.cpp
     @author   K.Townsend (Adafruit Industries)
     @license  BSD (see license.txt)
 
@@ -26,7 +26,7 @@
 
 #include <Wire.h>
 
-#include "Adafruit_ADS1015.h"
+#include "Adc4One.h"
 
 /**************************************************************************/
 /*!
@@ -85,7 +85,7 @@ static uint16_t readRegister(uint8_t i2cAddress, uint8_t reg) {
     @brief  Instantiates a new ADS1015 class w/appropriate properties
 */
 /**************************************************************************/
-Adafruit_ADS1015::Adafruit_ADS1015(uint8_t i2cAddress) 
+Adc4One::Adc4One(uint8_t i2cAddress) 
 {
    m_i2cAddress = i2cAddress;
    m_conversionDelay = ADS1015_CONVERSIONDELAY;
@@ -95,23 +95,10 @@ Adafruit_ADS1015::Adafruit_ADS1015(uint8_t i2cAddress)
 
 /**************************************************************************/
 /*!
-    @brief  Instantiates a new ADS1115 class w/appropriate properties
-*/
-/**************************************************************************/
-Adafruit_ADS1115::Adafruit_ADS1115(uint8_t i2cAddress)
-{
-   m_i2cAddress = i2cAddress;
-   m_conversionDelay = ADS1115_CONVERSIONDELAY;
-   m_bitShift = 0;
-   m_gain = GAIN_TWOTHIRDS; /* +/- 6.144V range (limited to VDD +0.3V max!) */
-}
-
-/**************************************************************************/
-/*!
     @brief  Sets up the HW (reads coefficients values, etc.)
 */
 /**************************************************************************/
-void Adafruit_ADS1015::begin() {
+void Adc4One::begin() {
   Wire.begin();
 }
 
@@ -123,7 +110,7 @@ void Adafruit_ADS1015::begin() {
             have the SDA and SCL pins other than 4 and 5.
 */
 /**************************************************************************/
-void Adafruit_ADS1015::begin(uint8_t sda, uint8_t scl) {
+void Adc4One::begin(uint8_t sda, uint8_t scl) {
   Wire.begin(sda, scl);
 }
 #endif
@@ -133,7 +120,7 @@ void Adafruit_ADS1015::begin(uint8_t sda, uint8_t scl) {
     @brief  Sets the gain and input voltage range
 */
 /**************************************************************************/
-void Adafruit_ADS1015::setGain(adsGain_t gain)
+void Adc4One::setGain(adsGain_t gain)
 {
   m_gain = gain;
 }
@@ -143,7 +130,7 @@ void Adafruit_ADS1015::setGain(adsGain_t gain)
     @brief  Gets a gain and input voltage range
 */
 /**************************************************************************/
-adsGain_t Adafruit_ADS1015::getGain()
+adsGain_t Adc4One::getGain()
 {
   return m_gain;
 }
@@ -153,7 +140,7 @@ adsGain_t Adafruit_ADS1015::getGain()
     @brief  Gets a single-ended ADC reading from the specified channel
 */
 /**************************************************************************/
-uint16_t Adafruit_ADS1015::readADC_SingleEnded(uint8_t channel) {
+uint16_t Adc4One::readADC_SingleEnded(uint8_t channel) {
   if (channel > 3)
   {
     return 0;
@@ -213,7 +200,7 @@ uint16_t Adafruit_ADS1015::readADC_SingleEnded(uint8_t channel) {
             positive or negative.
 */
 /**************************************************************************/
-int16_t Adafruit_ADS1015::readADC_Differential_0_1() {
+int16_t Adc4One::readADC_Differential_0_1() {
   // Start with default values
   uint16_t config = ADS1015_REG_CONFIG_CQUE_NONE    | // Disable the comparator (default val)
                     ADS1015_REG_CONFIG_CLAT_NONLAT  | // Non-latching (default val)
@@ -264,7 +251,7 @@ int16_t Adafruit_ADS1015::readADC_Differential_0_1() {
             positive or negative.
 */
 /**************************************************************************/
-int16_t Adafruit_ADS1015::readADC_Differential_2_3() {
+int16_t Adc4One::readADC_Differential_2_3() {
   // Start with default values
   uint16_t config = ADS1015_REG_CONFIG_CQUE_NONE    | // Disable the comparator (default val)
                     ADS1015_REG_CONFIG_CLAT_NONLAT  | // Non-latching (default val)
@@ -316,7 +303,7 @@ int16_t Adafruit_ADS1015::readADC_Differential_2_3() {
             This will also set the ADC in continuous conversion mode.
 */
 /**************************************************************************/
-void Adafruit_ADS1015::startComparator_SingleEnded(uint8_t channel, int16_t threshold)
+void Adc4One::startComparator_SingleEnded(uint8_t channel, int16_t threshold)
 {
   // Start with default values
   uint16_t config = ADS1015_REG_CONFIG_CQUE_1CONV   | // Comparator enabled and asserts on 1 match
@@ -362,7 +349,7 @@ void Adafruit_ADS1015::startComparator_SingleEnded(uint8_t channel, int16_t thre
             results without changing the config value.
 */
 /**************************************************************************/
-int16_t Adafruit_ADS1015::getLastConversionResults()
+int16_t Adc4One::getLastConversionResults()
 {
   // Wait for the conversion to complete
   delay(m_conversionDelay);

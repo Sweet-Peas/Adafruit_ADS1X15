@@ -117,7 +117,7 @@ typedef enum
   GAIN_SIXTEEN      = ADS1015_REG_CONFIG_PGA_0_256V
 } adsGain_t;
 
-class Adafruit_ADS1015
+class Adc4One
 {
 protected:
    // Instance-specific properties
@@ -127,7 +127,7 @@ protected:
    adsGain_t m_gain;
 
  public:
-  Adafruit_ADS1015(uint8_t i2cAddress = ADS1015_ADDRESS);
+  Adc4One(uint8_t i2cAddress = ADS1015_ADDRESS);
   void begin(void);
 #if defined(ARDUINO_ARCH_ESP8266)
   void begin(uint8_t sda, uint8_t scl);
@@ -143,11 +143,3 @@ protected:
  private:
 };
 
-// Derive from ADS1105 & override construction to set properties
-class Adafruit_ADS1115 : public Adafruit_ADS1015
-{
- public:
-  Adafruit_ADS1115(uint8_t i2cAddress = ADS1015_ADDRESS);
-
- private:
-};
